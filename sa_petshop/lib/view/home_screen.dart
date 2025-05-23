@@ -1,4 +1,5 @@
 import 'dart:isolate';
+import 'dart:js_interop';
 import '../controllers/pet_controllers.dart';
 import '../models/pet_model.dart';
 
@@ -34,10 +35,26 @@ class _HomeScreenState extends State<HomeScreen>{
     }
   }
 
-  //build da tela
+// build da tela
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(title: Text("Meus Pets"),),
+      body:_isLoading 
+      ? Center(child: CircularProgressIndicator(),) 
+      :Padding(
+        padding: EdgeInsets.all(16),
+        child: Expanded(child: ListView.builder(
+          itemCount: _pets.length,
+          itemBuilder: (context,index){
+            final pet = _pets[index];
+            return ListTile(
+              title: Text(pet.nome),
+              subtitle: Text(pet.nomeDono),
+              
+            );
+          })),) 
+    );
   }
 }
