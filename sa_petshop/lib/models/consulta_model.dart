@@ -6,7 +6,7 @@ class Consulta {
   final int petId;
   final DateTime dataHora;//obj é dateTime -> BD é string
   final String tipoServico;
-  final String? observacao;
+  final String observacao;
 
   //construtor
   //final -> não pode ser alterado depois de atribuído
@@ -15,7 +15,7 @@ class Consulta {
     required this.petId,
     required this.dataHora,
     required this.tipoServico,
-    this.observacao,
+    required this.observacao,
   });
 
   //toMap -> objeto -> BD
@@ -36,7 +36,7 @@ class Consulta {
       petId: map["pet_id"] as int, 
       dataHora: DateTime.parse(map["data_hora"] as String), //converter String em Formato de DateTime
       tipoServico: map["tipo_servico"] as String,
-      observacao: map["observacao"] as String?,);// pode ser nulo
+      observacao: map["observacao"] as String,);
   }
 
   //formata a data para o formato Brasil

@@ -2,7 +2,8 @@
 
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+
+
 import '../models/pet_model.dart';
 
 class PetShopDBHelper {
@@ -16,8 +17,8 @@ class PetShopDBHelper {
   }
 
   //verificação do banco de dados  -> verificar se já fooi criado, e se esta aberto
-  Future<DataBase> _initDatabase() async {
-    final dbPath = await getDatabasePath();
+  Future<Database> _initDatabase() async { //criar o bd
+    final dbPath = await getDatabasesPath();
     final path = join(dbPath, "petshop.db");
 
     return await openDatabase(
@@ -37,7 +38,7 @@ class PetShopDBHelper {
   }
 
   //veririfa se o banco já foi iniciado, caso contrário inicia a conexão
-  Future<DataBase> get database async{
+  Future<Database> get database async{
     if(_database !=null){
       return _database!;
     }else{
@@ -60,20 +61,23 @@ class PetShopDBHelper {
 
   Future<Pet?> getPetById(int id) async{
     final db = await database;
-    final List<Map<String,dynamic>> maps = await db.query("pets",
-     where: "id=?",
-     whereArgs:{id});
+    final List<Map<String,dynamic>> maps = await db.query(
+      "pets", 
+      where: "id=?",
+      whereArgs: [id]);
     if(maps.isEmpty){
       return null;
     }else{
       Pet.fromMap(maps.first);
     }
+    return null;
   }
 
   Future<int> deletePet(int id) async{
     final db = await database;
-    return await db.delete("pets", 
-    where: "id=?",
-    whereArgs: [id]);
-  }//delete on cascade na tabela consulta
+    return await db.delete("pets", where: "id=?", whereArgs: [id]);
+  } //DELETE  ON CASCADE  na tabela Consulta
+
+//crud e criar o bd de consultas
+
 }
