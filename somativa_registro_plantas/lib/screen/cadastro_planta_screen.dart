@@ -1,11 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart' show AppBar, BoxFit, BuildContext, Colors, Container, EdgeInsets, ElevatedButton, Form, FormState, GestureDetector, GlobalKey, Icon, IconButton, Icons, Image, InputDecoration, ListTile, ListView, Navigator, Padding, Scaffold, ScaffoldMessenger, SizedBox, SnackBar, State, StatefulWidget, Text, TextEditingController, TextFormField, Widget, showDatePicker;
 import 'package:somativa_registro_plantas/db/databse_helper.dart';
-import 'package:somativa_registro_plantas/models/plantas_model.dart';
-import '../db/database_helper.dart';
-import '../models/planta.dart';
+import 'package:somativa_registro_plantas/models/plantas_model.dart' show Planta;
 
 class CadastroPlantaScreen extends StatefulWidget {
   const CadastroPlantaScreen({super.key});
