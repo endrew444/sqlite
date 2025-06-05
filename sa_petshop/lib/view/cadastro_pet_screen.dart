@@ -24,7 +24,7 @@ class _CadastroPetScreenState extends State<CadastroPetScreen> {
   late String _telefoneDono;
 
   //Cadastrar o Pet (salvar no BD) 
-  _salvarPet() async{
+  Future<void> _salvarPet() async{
     if(_formKey.currentState!.validate()){
       _formKey.currentState!.save();
       final newPet = Pet(
@@ -70,7 +70,7 @@ class _CadastroPetScreenState extends State<CadastroPetScreen> {
                 validator: (value)=> value!.isEmpty ? "Campo não Preenchido!!!": null,
                 onSaved: (value) => _telefoneDono= value!,
               ),
-              ElevatedButton(onPressed: _salvarPet, child: Text("Cadastrar pet"))
+              ElevatedButton(onPressed: _salvarPet, child: Text("Cadastrar Pet"))
             ],
           )
           ),

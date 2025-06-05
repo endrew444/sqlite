@@ -28,22 +28,30 @@ class PetShopDBHelper {
 
   // método para cria as tabelas
   _onCreateDB(Database db, int version) async {
-    //criar a Tabela do Pet
-    await db.execute("""CREATE TABLE IF NOT EXISTS pets(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nome TEXT NOT NULL,
-      raca TEXT NOT NULL,
-      nome_dono TEXT NOT NULL,
-      telefone_dono TEXT NOT NULL);""");
-    print("tabela pets Criada");
-    await db.execute("""CREATE TABLE IF NOT EXISTS consultas(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      pet_id INTEGER NOT NULL,
-      data_hora TEXT NOT NULL,
-      tipo_servico TEXT NOT NULL,
-      observacao TEXT NOT NULL,
-      FOREING KEY (pet_id) REFERENCES pets(id) ON DELETE CASCADE)""");
-    print("tabela consulta criada");
+    // Cria a tabela 'pets'
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS pets(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT,
+        raca TEXT,
+        nome_dono TEXT,
+        telefone_dono TEXT
+      )
+    ''');
+    print("banco pets criado");
+
+    // Cria a tabela 'consultas'
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS consultas(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        pet_id INTEGER,
+        data_hora TEXT, 
+        tipo_servico TEXT,
+        observacao TEXT,
+        FOREIGN KEY (pet_id) REFERENCES pets(id) ON DELETE CASCADE
+      )
+    ''');
+    print("banco consultas criado");
   }
 
   //veririfa se o banco já foi iniciado, caso contrário inicia a conexão
