@@ -1,6 +1,6 @@
 // ignore: depend_on_referenced_packages
-import 'package:somativa_registro_plantas/models/cuidado_model.dart';
-import 'package:somativa_registro_plantas/models/plantas_model.dart';
+import 'package:somativa_registro_plantas/models/cuidado.dart';
+import 'package:somativa_registro_plantas/models/planta.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -122,5 +122,71 @@ class DatabaseHelper {
   Future close() async {
     final db = await instance.database;
     db.close();
+  }
+  Future<void> clearDatabase() async {
+    final db = await instance.database;
+    await db.delete('plantas');
+    await db.delete('cuidados');
+  }
+
+  Future<int> getPlantaCount() async {
+    final db = await instance.database;
+    final result = await db.rawQuery('SELECT COUNT(*) FROM plantas');
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  Future<int> getCuidadoCount() async {
+    final db = await instance.database;
+    final result = await db.rawQuery('SELECT COUNT(*) FROM cuidados');
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  Future<List<Map<String, dynamic>>> getAllRows(String table) async {
+    final db = await instance.database;
+    return await db.query(table);
+  }
+
+  Future<List<Map<String, dynamic>>> queryRows(
+    String table, {
+    String? where,
+    List<dynamic>? whereArgs,
+    String? orderBy,
+  }) async {
+    final db = await instance.database;
+    return await db.query(
+      table,
+      where: where,
+      whereArgs: whereArgs,
+      orderBy: orderBy,
+    );
+  }
+
+  Future<int> insert(String table, Map<String, dynamic> map) async {
+    final db = await instance.database;
+    return await db.insert(table, map);
+  }
+
+  Future<List<Map<String, dynamic>>> queryAllRows(String table) async {
+    final db = await instance.database;
+    return await db.query(table);
+  }
+
+  Future<int> update(String table, Map<String, dynamic> map, String where, List<dynamic> whereArgs) async {
+    final db = await instance.database;
+    return await db.update(
+      table,
+      map,
+      where: where,
+      whereArgs: whereArgs,
+    );
+  }
+
+  Future<int> delete(String table, String where, List<dynamic> whereArgs) async {
+    final db = await instance.database;
+    return await db.delete(
+      table,
+      where: where,
+      whereArgs: whereArgs,
+    );
   }
 }
